@@ -1,11 +1,18 @@
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import io.restassured.response.Response;
 
 import java.util.Map;
 
 public class RestUtils {
+
+    public static Response performGet(String endPoint) {
+        return RestAssured.given()
+                .contentType(ContentType.JSON)
+                .get(endPoint)
+                .then()
+                .extract().response();
+    }
 
     public static Response performGet(String baseUri, String endPoint) {
         return RestAssured.given()

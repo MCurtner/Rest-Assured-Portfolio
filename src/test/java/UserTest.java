@@ -1,3 +1,4 @@
+import io.restassured.RestAssured;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -12,24 +13,24 @@ public class UserTest {
 
     @BeforeTest
     public void setup() {
-
+        RestAssured.baseURI = baseUri;
     }
 
     @Test
     public void testListOfUsers_StatusCode() {
-        RestUtils.performGet(baseUri, "users?page=0&per_page=100").then().assertThat().statusCode(200);
+        RestUtils.performGet("users?page=0&per_page=100").then().assertThat().statusCode(200);
     }
 
     @Test
     public void testListOfUsers_TotalPages() {
-        RestUtils.performGet(baseUri, "users?page=0&per_page=100")
+        RestUtils.performGet("users?page=0&per_page=100")
                 .then()
                 .body("total_pages", equalTo(1));
     }
 
     @Test
     public void testListOfUsers_Total() {
-        RestUtils.performGet(baseUri, "users?page=0&per_page=100")
+        RestUtils.performGet("users?page=0&per_page=100")
                 .then()
                 .body("total", equalTo(12));
     }
